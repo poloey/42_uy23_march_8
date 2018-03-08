@@ -168,6 +168,58 @@ return view('notes.index')->withNotes($notes);
 {{ $hello }}    
 ~~~
 
+# csrf and method inside form incase of creating, editing, deleting
+
+~~~php
+# cross site request forgery   
+@csrf 
+# for update
+@method('put')
+# for delete
+@method('delete')
+~~~
+
+## how to validate a form  
+
+~~~php
+$this->validate($request, [
+  'title' => 'required|min:3',
+  'email' => 'required|min:3|email|unique:users',
+]);
+~~~
+
+## how to show errors in from 
+
+~~~php
+@if (count($errors->all))
+  foreach($errors->all() as $error)
+    <li>{{$error}}</li>
+  @endforeach
+@endif
+~~~
+
+## paginate with orderBy 
+
+~~~php
+$notes = Note::orderBy('id', 'desc')->paginate(10);
+
+# to show pagination links in blade file
+$notes->links();
+~~~
+
+## how to run other people code on your pc
+
+~~~php
+composer install
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+
+copy .env.example file to .env file
+
+php artisan key:generate
+
+~~~
 
 
 
